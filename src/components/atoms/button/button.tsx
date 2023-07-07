@@ -7,7 +7,7 @@ interface ButtonProps {
 
 const ButtonComponent: React.FC<ButtonProps> = ({label, filter}) => {
     return (
-        <Button onClick={() => filter(label)}>{label}</Button>
+        <Button size="md" variant="outlined" color="neutral" onClick={() => filter(label)}>{label}</Button>
     )
     
 }

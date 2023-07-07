@@ -1,0 +1,10 @@
+@import 'src/styles/_vars.scss';
+
+.tile-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: 2px solid $black;
+    padding: 20px 15px;
+    margin-bottom: 10px;
+}
