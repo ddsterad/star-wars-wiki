@@ -3,7 +3,8 @@
 .tile-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
     border: 2px solid $black;
     padding: 20px 15px;
     margin-bottom: 10px;

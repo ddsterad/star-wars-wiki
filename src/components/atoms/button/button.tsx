@@ -1,13 +1,14 @@
 import Button from '@mui/joy/Button';
 
 interface ButtonProps {
+    active: Boolean;
     label: string;
-    filter: Function;
+    filterFunction: Function;
 }
 
-const ButtonComponent: React.FC<ButtonProps> = ({label, filter}) => {
+const ButtonComponent: React.FC<ButtonProps> = ({active, label, filterFunction}) => {
     return (
-        <Button size="md" variant="outlined" color="neutral" onClick={() => filter(label)}>{label}</Button>
+        <Button size="md" variant={active ? "soft":"outlined"} color={active ? "success" : "neutral"} onClick={() => filterFunction(label)}>{label}</Button>
     )
     
 }
