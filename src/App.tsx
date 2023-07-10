@@ -6,6 +6,8 @@ import Header from './components/moleculas/header/header';
 import { Container } from '@mui/joy';
 import TileComponent from './components/atoms/tile/tile';
 import Pagination from '@mui/material/Pagination/Pagination';
+import { Route, Routes } from 'react-router-dom';
+import DetailPageComponent from './components/moleculas/detail-page/detail-page';
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
   const[currentPage, setCurrentPage]=useState(1);
   const[totalPageCount, setTotalPageCount] = useState<number>()
   const[currentItems, setCurrentItems] = useState<any[]>()
+  const[detailInfo, setDetailInfo] = useState({});
 
   const getVehicles = async() => {
     await Utils.Vehicles.find(vehicle => vehicle.pilots.length > 0 )
@@ -126,25 +129,39 @@ function App() {
     generatePagination(contentToShow, page);
   };
 
+  const MainComponent = () => {
+    return (
+      <>
+        <Container>
+            <Header label='Star Wars Wiki' filter={setFilterOnClickValue}/>
+        </Container>
+        <Container>
+            {currentItems?.map((item, index) => {
+                return <TileComponent key={index} type={filter} content={item} setDetailInfo={setDetailInfo}/>
+            })}
+            
+            <Pagination
+              count={totalPageCount}
+              page={currentPage}
+              onChange={handlePageChange}
+              variant="outlined"
+              shape="rounded"/>
+        </Container>
+      </>
+    )
+  }
+
   return (
-    
     <>
-      <Container>
-          <Header label='Star Wars Wiki' filter={setFilterOnClickValue}/>
-      </Container>
-      <Container>
-          {currentItems?.map((item, index) => {
-              return <TileComponent key={index} type={filter} content={item}/>
-          })}
-          
-          <Pagination
-            count={totalPageCount}
-            page={currentPage}
-            onChange={handlePageChange}
-            variant="outlined"
-            shape="rounded"/>
-      </Container>
-      
+      <Routes>
+        <Route path="/" element={<MainComponent />} />
+        <Route path="/film-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
+        <Route path="/vehicle-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
+        <Route path="/starships-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
+        <Route path="/species-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
+        <Route path="/planet-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
+        <Route path="/people-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
+      </Routes>
     </>
     
   );
