@@ -8,6 +8,7 @@ import TileComponent from './components/atoms/tile/tile';
 import Pagination from '@mui/material/Pagination/Pagination';
 import { Route, Routes } from 'react-router-dom';
 import DetailPageComponent from './components/moleculas/detail-page/detail-page';
+import Welcome from './images/welcome.png'
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
   const[currentItems, setCurrentItems] = useState<any[]>()
   const[detailInfo, setDetailInfo] = useState({});
   const [inputSearch, setInputSearch] = useState('');
-
+  const [filteredItems, setFilteredItems] = useState<Object[]>([]);
 
   const getVehicles = async() => {
     await Utils.Vehicles.find(vehicle => vehicle.pilots.length > 0 )
@@ -104,19 +105,26 @@ function App() {
         setContentToShow(starships)
         generatePagination(starships, currentPage)
         break;
-      case 'All':	
-        const allContent:any = {...vehicles, ...people, ...planets, ...films, ...species, ...starships};	
-        const arrayOfObj = Object.entries(allContent).map((e) => ( e[1] ));
-        setContentToShow(arrayOfObj)
-        generatePagination(arrayOfObj, currentPage)	
-        break;
+      // case 'All':	
+      //   const allContent:any = {...vehicles, ...people, ...planets, ...films, ...species, ...starships};	
+      //   const arrayOfObj = Object.entries(allContent).map((e) => ( e[1] ));
+      //   setContentToShow(arrayOfObj)
+      //   generatePagination(arrayOfObj, currentPage)	
+      //   break;
     }
     
   }, [filter])
 
+  useEffect(() => {
+    console.log('Filtered Items', filteredItems);
+  });
+
   
 
   const setFilterOnClickValue = (label:string) => {
+    setCurrentPage(1);
+    setInputSearch('');
+    setFilteredItems([]);
     setFilter(label);
   } 
 
@@ -138,21 +146,48 @@ function App() {
 
   const handlePageChange = (event: any, page: number) => {
     setCurrentPage(page);
-    console.log('Page:', page)
     generatePagination(contentToShow, page);
   };
 
+  const filteredData = (inputValue: string) => {
+
+    const filteredItemsArray:any = [];
+
+    setInputSearch(inputValue);
+    console.log("input value", inputValue);
+    contentToShow?.filter((element: any) => {
+      if (inputValue === '') {
+          return element;
+      }
+      else {
+          const result = element.name.toLowerCase().includes(inputValue.toLowerCase());
+          console.log('Result:', result);
+          if(result) {
+            filteredItemsArray.push(element);
+            setFilteredItems(filteredItemsArray);
+            return result
+          }
+      }
+    })
+  } 
+
+
   const MainComponent = () => {
+    const finalContent = filteredItems && filteredItems.length > 0 ? filteredItems : currentItems
     return (
       <>
         <Container>
-            <Header data-testid="header-id" filter={filter} label='Star Wars Wiki' filterFunction={setFilterOnClickValue}/>
-            <div className='search-wrapper'>
-                <Input placeholder="Search something" variant="outlined" onChange={(val) => setInputSearch(val.target.value)} />
-            </div>
+            <Header data-testid="header-id" filter={filter} filterFunction={setFilterOnClickValue}/>
+            {!filter && (
+              <>
+                <div className='welcome-image'>
+                  <img src={Welcome} alt="welcome" />
+                </div>
+              </>
+            )}
         </Container>
-        <Container>
-            {currentItems?.map((item, index) => {
+        {filter && (<Container>
+            {finalContent?.map((item, index) => {
                 return <TileComponent key={index} type={filter} content={item} setDetailInfo={setDetailInfo}/>
             })}
             
@@ -162,13 +197,19 @@ function App() {
               onChange={handlePageChange}
               variant="outlined"
               shape="rounded"/>
-        </Container>
+        </Container>)}
       </>
     )
   }
 
   return (
     <div data-testid="main-app">
+      <Container >
+        <div className='search-wrapper'>
+          <h2>Star Wars Wiki</h2>
+          <Input value={inputSearch} placeholder="Search something" variant="outlined" onChange={(event) => {filteredData(event?.target.value)}} />
+        </div>
+      </Container>
       <Routes>
         <Route path="/" element={<MainComponent />} />
         <Route path="/film-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
@@ -184,3 +225,4 @@ function App() {
 }
 
 export default App;
+

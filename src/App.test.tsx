@@ -1,9 +1,22 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
+import ButtonComponent from './components/atoms/button/button';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('Test on ButtonComponent', () => {
+
+  test('onClick function', () => {
+
+    const testOnClick = jest.fn();
+
+    render(<ButtonComponent filterFunction={testOnClick} active={true} label={'Test Button'} />);
+
+    const button = screen.getByText('Test Button');
+
+    fireEvent.click(button);
+
+    expect(testOnClick).toHaveBeenCalled();
+
+  });
+
 });

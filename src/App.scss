@@ -7,6 +7,19 @@
   pointer-events: none;
 }
 
+.welcome-image {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.search-wrapper {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
