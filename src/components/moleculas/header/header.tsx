@@ -11,13 +11,13 @@ const Header: React.FC<HeaderProps> = ({filter, filterFunction}) => {
         <>
             
             <div data-testid="header-to-be-tested" className='button-wrapper'>
-                {/* <ButtonComponent active={filter=== 'All' ? true:false} label='All' filterFunction={filterFunction}/> */}
-                <ButtonComponent active={filter=== 'People' ? true:false} label='People' filterFunction={filterFunction}/>
-                <ButtonComponent active={filter=== 'Vehicles' ? true:false} label='Vehicles' filterFunction={filterFunction}/>
-                <ButtonComponent active={filter=== 'Planets' ? true:false} label='Planets' filterFunction={filterFunction}/>
-                <ButtonComponent active={filter=== 'Films' ? true:false} label='Films' filterFunction={filterFunction}/>
-                <ButtonComponent active={filter=== 'Species' ? true:false} label='Species' filterFunction={filterFunction}/>
-                <ButtonComponent active={filter=== 'Starships' ? true:false} label='Starships' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'All'} label='All' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'People'} label='People' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'Vehicles'} label='Vehicles' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'Planets'} label='Planets' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'Films'} label='Films' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'Species'} label='Species' filterFunction={filterFunction}/>
+                <ButtonComponent active={filter === 'Starships'} label='Starships' filterFunction={filterFunction}/>
             </div>
         </>
     )
