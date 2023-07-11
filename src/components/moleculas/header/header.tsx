@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({filter, filterFunction}) => {
         <>
             
             <div data-testid="header-to-be-tested" className='button-wrapper'>
-                {/* <ButtonComponent active={filter=== 'All' ? true:false} label='All' filterFunction={filterFunction}/> */}
+                <ButtonComponent active={filter=== 'All' ? true:false} label='All' filterFunction={filterFunction}/>
                 <ButtonComponent active={filter=== 'People' ? true:false} label='People' filterFunction={filterFunction}/>
                 <ButtonComponent active={filter=== 'Vehicles' ? true:false} label='Vehicles' filterFunction={filterFunction}/>
                 <ButtonComponent active={filter=== 'Planets' ? true:false} label='Planets' filterFunction={filterFunction}/>
