@@ -152,9 +152,7 @@ const HomepageComponent:React.FC<Props> = ({setContent}) => {
         </Container>
         <Container>
             <Header data-testid="header-id" filter={filter} filterFunction={setFilterOnClickValue}/>
-            {!filter && (<div className='welcome-image'>
-                <img src={Welcome} alt="welcome" />
-            </div>)}
+            
         </Container>
         {filter && (<Container>
             {finalContent?.map((item: any, index: Key | null | undefined) => {
