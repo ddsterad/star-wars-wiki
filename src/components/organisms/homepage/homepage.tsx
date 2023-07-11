@@ -93,7 +93,6 @@ const HomepageComponent:React.FC<Props> = ({setContent}) => {
 
     const contentSetter = (event:any) => {
         setDetailInfo(event);
-        console.log('Event:', event)
         setContent(event);
     }
     
@@ -106,8 +105,6 @@ const HomepageComponent:React.FC<Props> = ({setContent}) => {
       
           currentPage * ITEMS_PER_PAGE
         );
-
-        console.log("currentItems:", currentItems )
     
         setTotalPageCount(totalPageCount);
         setCurrentItems(currentItems);
