@@ -76,10 +76,9 @@ const HomepageComponent:React.FC<Props> = ({setContent}) => {
             generatePagination(starships, currentPage)
             break;
           case 'All':	
-            const allContent:any = {...vehicles, ...people, ...planets, ...films, ...species, ...starships};	
-            const arrayOfObj = Object.entries(allContent).map((e) => ( e[1] ));
-            setContentToShow(arrayOfObj)
-            generatePagination(arrayOfObj, currentPage)	
+            const allContent:any[] = ([] as any[]).concat(vehicles, people, planets, films, species, starships);
+            setContentToShow(allContent)
+            generatePagination(allContent, currentPage)	
             break;
         }
         
@@ -130,11 +129,12 @@ const HomepageComponent:React.FC<Props> = ({setContent}) => {
               return element;
           }
           else {
-              const result = element.name.toLowerCase().includes(inputValue.toLowerCase());
+              const result = element?.name?.toLowerCase().includes(inputValue.toLowerCase());
               if(result) {
                 filteredItemsArray.push(element);
                 setFilteredItems(filteredItemsArray);
-                setFinalContent(filteredItemsArray);
+                generatePagination(filteredItemsArray, 1)
+                //setFinalContent(filteredItemsArray);
                 return result
               }
           }
