@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### `npx create-react-app star-wars-wiki --template typescript`
 
 
-## Available Scripts
+## How to run the application
 
 Before starting, place yourself in the root of the project and ensure that you have correctly installed all the project libraries by running the following command
 
