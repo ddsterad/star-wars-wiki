@@ -6,7 +6,7 @@ import Header from './components/moleculas/header/header';
 import { Container, Input } from '@mui/joy';
 import TileComponent from './components/atoms/tile/tile';
 import Pagination from '@mui/material/Pagination/Pagination';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import DetailPageComponent from './components/moleculas/detail-page/detail-page';
 import Welcome from './images/welcome.png'
 
@@ -27,6 +27,8 @@ function App() {
   const[detailInfo, setDetailInfo] = useState({});
   const [inputSearch, setInputSearch] = useState('');
   const [filteredItems, setFilteredItems] = useState<Object[]>([]);
+  const [pathName, setPathName] = useState('');
+  const location = useLocation();
 
   const getVehicles = async() => {
     await Utils.Vehicles.find(vehicle => vehicle.pilots.length > 0 )
@@ -116,10 +118,8 @@ function App() {
   }, [filter])
 
   useEffect(() => {
-    console.log('Filtered Items', filteredItems);
-  });
-
-  
+    setPathName(location.pathname);
+  }, [location])
 
   const setFilterOnClickValue = (label:string) => {
     setCurrentPage(1);
@@ -127,8 +127,6 @@ function App() {
     setFilteredItems([]);
     setFilter(label);
   } 
-
-  
 
   const generatePagination = (contentToShow: any, currentPage:number) => {
     const totalPageCount = Math.ceil(contentToShow.length / ITEMS_PER_PAGE);
@@ -204,12 +202,12 @@ function App() {
 
   return (
     <div data-testid="main-app">
-      <Container >
+      {pathName === '/' && (<Container >
         <div className='search-wrapper'>
           <h2>Star Wars Wiki</h2>
           <Input value={inputSearch} placeholder="Search something" variant="outlined" onChange={(event) => {filteredData(event?.target.value)}} />
         </div>
-      </Container>
+      </Container>)}
       <Routes>
         <Route path="/" element={<MainComponent />} />
         <Route path="/film-detail-page" element={<DetailPageComponent detailInfo={detailInfo} />} />
